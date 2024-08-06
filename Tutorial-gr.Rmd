@@ -1,0 +1,40 @@
+---
+title: "Learning to new base"
+author: "GuanRu"
+data: "`r Sys.Date()`"
+output: 
+      bookdown::html_document2
+editor_options: 
+  chunk_output_type: console
+---
+
+# Introduction
+
+This is how we learn to rebase a git repository.
+
+# Covid-19 visualization 
+
+```{r message=FALSE}
+library(tidyverse)
+library(COVID19)
+```
+
+```{r message=FALSE, cache=TRUE}
+covid_us <- covid19("USA", level = 2)
+```
+
+```{r warning=FALSE, fig.align='center'}
+head(covid_us)
+ggplot(covid_us, aes(x = date, y = confirmed))+
+      geom_line()+
+      facet_wrap(~id)
+```
+
+```{r}
+covid_us %>% 
+  dplyr::filter(id %in% unique(covid_us$id)[1:5]) %>% 
+  ggplot(aes(x = date, y = confirmed)) + 
+  geom_line() + 
+  facet_wrap(~id)
+```
+
